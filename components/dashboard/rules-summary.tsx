@@ -5,9 +5,23 @@ import { RULES } from '@/lib/mock-data';
 import { cn, getSeverityBadge } from '@/lib/utils';
 import Link from 'next/link';
 import { ChevronRight } from 'lucide-react';
+import type { Violation } from '@/lib/types';
 
-export function RulesSummary() {
-  const activeRules = RULES.filter(r => r.enabled && r.violationCount > 0).slice(0, 6);
+interface RulesSummaryProps {
+  violations?: Violation[];
+}
+
+export function RulesSummary({ violations = [] }: RulesSummaryProps) {
+  // Count live violations per rule, fall back to mock counts if empty
+  const liveCountByRuleId = violations.reduce<Record<string, number>>((acc, v) => {
+    acc[v.ruleId] = (acc[v.ruleId] ?? 0) + 1;
+    return acc;
+  }, {});
+
+  const activeRules = RULES.map(r => ({
+    ...r,
+    violationCount: violations.length > 0 ? (liveCountByRuleId[r.id] ?? 0) : r.violationCount,
+  })).filter(r => r.enabled && r.violationCount > 0).slice(0, 6);
 
   return (
     <div className="rounded-xl border border-[#1E1E22] bg-[#111113] overflow-hidden">

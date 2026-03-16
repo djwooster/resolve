@@ -1,13 +1,17 @@
 'use client';
 
 import { motion, AnimatePresence } from 'framer-motion';
-import { VIOLATIONS } from '@/lib/mock-data';
 import { cn, getSeverityBadge } from '@/lib/utils';
 import { Phone, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import type { Violation } from '@/lib/types';
 
-export function ViolationFeed() {
-  const activeViolations = VIOLATIONS.filter(v => !v.resolved).slice(0, 5);
+interface ViolationFeedProps {
+  violations: Violation[];
+}
+
+export function ViolationFeed({ violations }: ViolationFeedProps) {
+  const activeViolations = violations.filter(v => !v.resolved).slice(0, 5);
 
   return (
     <div className="rounded-xl border border-[#1E1E22] bg-[#111113] overflow-hidden">
@@ -20,6 +24,11 @@ export function ViolationFeed() {
           View all <ChevronRight className="w-3 h-3" />
         </Link>
       </div>
+      {activeViolations.length === 0 && (
+        <div className="px-6 py-12 text-center">
+          <p className="text-zinc-500 text-sm">No active violations — all leads within SLA.</p>
+        </div>
+      )}
       <div className="divide-y divide-[#1A1A1E]">
         <AnimatePresence>
           {activeViolations.map((violation, index) => (

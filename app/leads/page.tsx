@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Topbar } from '@/components/layout/topbar';
-import { LEADS } from '@/lib/mock-data';
+import { useResolveData } from '@/lib/use-resolve-data';
 import { cn } from '@/lib/utils';
 import { Phone, AlertTriangle } from 'lucide-react';
 import { format } from 'date-fns';
@@ -26,9 +26,10 @@ function formatCurrency(n: number) {
 
 export default function LeadsPage() {
   const [stageFilter, setStageFilter] = useState<string>('all');
+  const { leads } = useResolveData();
 
-  const stages = ['all', ...Array.from(new Set(LEADS.map(l => l.stage)))];
-  const filtered = stageFilter === 'all' ? LEADS : LEADS.filter(l => l.stage === stageFilter);
+  const stages = ['all', ...Array.from(new Set(leads.map(l => l.stage)))];
+  const filtered = stageFilter === 'all' ? leads : leads.filter(l => l.stage === stageFilter);
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -47,7 +48,7 @@ export default function LeadsPage() {
                   : 'text-zinc-400 border-[#1E1E22] hover:text-white hover:border-zinc-600'
               )}
             >
-              {stage === 'all' ? `All (${LEADS.length})` : stage}
+              {stage === 'all' ? `All (${leads.length})` : stage}
             </button>
           ))}
         </div>

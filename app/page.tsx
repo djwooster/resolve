@@ -6,29 +6,68 @@ import { MetricCard } from '@/components/dashboard/metric-card';
 import { ViolationFeed } from '@/components/dashboard/violation-feed';
 import { EnforcementChart } from '@/components/dashboard/enforcement-chart';
 import { RulesSummary } from '@/components/dashboard/rules-summary';
-import { DASHBOARD_METRICS } from '@/lib/mock-data';
+import { useResolveData } from '@/lib/use-resolve-data';
 import { formatCurrency } from '@/lib/utils';
+import { RefreshCw } from 'lucide-react';
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 }
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.08 } },
 };
 
 export default function DashboardPage() {
-  const metrics = DASHBOARD_METRICS;
+  const { metrics, leads, violations, loading, error, refresh, lastUpdated } = useResolveData();
+
+  if (loading && !metrics) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Topbar title="Dashboard" subtitle="Connecting to GoHighLevel..." />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="flex flex-col items-center gap-4">
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+            >
+              <RefreshCw className="w-8 h-8 text-zinc-500" />
+            </motion.div>
+            <p className="text-zinc-500 text-sm">Loading live data from GoHighLevel...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Topbar title="Dashboard" subtitle="Connection error" />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="rounded-xl border border-red-500/30 bg-red-500/8 p-8 max-w-md text-center">
+            <p className="text-red-400 font-bold text-lg mb-2">GHL Connection Error</p>
+            <p className="text-zinc-400 text-sm mb-4">{error}</p>
+            <button
+              onClick={refresh}
+              className="px-4 py-2 rounded-lg bg-white text-black text-sm font-bold hover:bg-zinc-100 transition-colors"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const m = metrics!;
 
   return (
     <div className="flex flex-col min-h-screen">
       <Topbar
         title="Dashboard"
-        subtitle="Real-time revenue enforcement overview"
+        subtitle={lastUpdated ? `Live · Updated ${lastUpdated.toLocaleTimeString()}` : 'Real-time revenue enforcement overview'}
       />
       <div className="flex-1 p-8">
         {/* Critical Alert Banner */}
-        {metrics.criticalViolations > 0 && (
+        {m.criticalViolations > 0 && (
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -41,11 +80,11 @@ export default function DashboardPage() {
                 transition={{ duration: 1.5, repeat: Infinity }}
               />
               <span className="text-sm font-bold text-red-400 uppercase tracking-wide">
-                {metrics.criticalViolations} Critical Violations Active
+                {m.criticalViolations} Critical Violation{m.criticalViolations !== 1 ? 's' : ''} Active
               </span>
             </div>
             <span className="text-sm text-zinc-400">
-              {formatCurrency(metrics.revenueAtRisk)} in revenue at risk — immediate action required
+              {formatCurrency(m.revenueAtRisk)} in revenue at risk — immediate action required
             </span>
           </motion.div>
         )}
@@ -59,67 +98,57 @@ export default function DashboardPage() {
         >
           <MetricCard
             label="Active Violations"
-            value={metrics.activeViolations}
-            subValue={`${metrics.criticalViolations} critical`}
+            value={m.activeViolations}
+            subValue={`${m.criticalViolations} critical`}
             icon="🚨"
-            variant="critical"
+            variant={m.criticalViolations > 0 ? 'critical' : 'default'}
           />
           <MetricCard
             label="Leads at Risk"
-            value={metrics.leadsAtRisk}
+            value={m.leadsAtRisk}
             subValue="Need immediate action"
             icon="⚠️"
-            variant="warning"
+            variant={m.leadsAtRisk > 0 ? 'warning' : 'default'}
           />
           <MetricCard
             label="Bookings Today"
-            value={`${metrics.bookingsToday}/${metrics.bookingTarget}`}
-            subValue={`${Math.round((metrics.bookingsToday / metrics.bookingTarget) * 100)}% of target`}
-            trend="down"
-            trendValue="-37%"
+            value={`${m.bookingsToday}/${m.bookingTarget}`}
+            subValue={`${Math.round((m.bookingsToday / m.bookingTarget) * 100)}% of target`}
             icon="📅"
-            variant="warning"
+            variant={m.bookingsToday < m.bookingTarget * 0.5 ? 'warning' : 'success'}
           />
           <MetricCard
             label="Avg Response Time"
-            value={`${metrics.avgResponseTime}m`}
+            value={`${m.avgResponseTime}m`}
             subValue="Target: ≤ 3 minutes"
-            trend="down"
-            trendValue="↑ 4.2m over SLA"
             icon="⏱️"
-            variant="critical"
+            variant={m.avgResponseTime > 3 ? 'critical' : 'success'}
           />
           <MetricCard
             label="Pipeline Value"
-            value={formatCurrency(metrics.pipelineValue)}
+            value={formatCurrency(m.pipelineValue)}
             subValue="Active opportunities"
-            trend="up"
-            trendValue="+12%"
             icon="💰"
           />
           <MetricCard
             label="Total Leads"
-            value={metrics.totalLeads}
-            subValue="This month"
-            trend="up"
-            trendValue="+8"
+            value={m.totalLeads}
+            subValue="Monitored contacts"
             icon="👥"
           />
           <MetricCard
             label="Conversion Rate"
-            value={`${metrics.conversionRate}%`}
+            value={`${m.conversionRate}%`}
             subValue="Lead to booking"
-            trend="down"
-            trendValue="-3.2%"
             icon="📈"
-            variant="warning"
+            variant={m.conversionRate < 20 ? 'warning' : 'default'}
           />
           <MetricCard
             label="Revenue at Risk"
-            value={formatCurrency(metrics.revenueAtRisk)}
+            value={formatCurrency(m.revenueAtRisk)}
             subValue="From open violations"
             icon="💸"
-            variant="critical"
+            variant={m.revenueAtRisk > 0 ? 'critical' : 'default'}
           />
         </motion.div>
 
@@ -127,10 +156,10 @@ export default function DashboardPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
             <EnforcementChart />
-            <ViolationFeed />
+            <ViolationFeed violations={violations} />
           </div>
           <div className="space-y-6">
-            <RulesSummary />
+            <RulesSummary violations={violations} />
           </div>
         </div>
       </div>

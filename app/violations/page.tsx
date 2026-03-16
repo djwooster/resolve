@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Topbar } from '@/components/layout/topbar';
-import { VIOLATIONS } from '@/lib/mock-data';
+import { useResolveData } from '@/lib/use-resolve-data';
 import { cn, getSeverityBadge } from '@/lib/utils';
 import { Phone, CheckCircle, ArrowUpRight, Clock } from 'lucide-react';
 import type { Violation } from '@/lib/types';
@@ -115,13 +115,14 @@ function ViolationCard({ violation }: { violation: Violation }) {
 
 export default function ViolationsPage() {
   const [filter, setFilter] = useState<'all' | 'CRITICAL' | 'WARNING'>('all');
+  const { violations } = useResolveData();
 
-  const filtered = VIOLATIONS.filter(v =>
+  const filtered = violations.filter(v =>
     !v.resolved && (filter === 'all' || v.severity === filter)
   );
 
-  const criticalCount = VIOLATIONS.filter(v => !v.resolved && v.severity === 'CRITICAL').length;
-  const warningCount = VIOLATIONS.filter(v => !v.resolved && v.severity === 'WARNING').length;
+  const criticalCount = violations.filter(v => !v.resolved && v.severity === 'CRITICAL').length;
+  const warningCount = violations.filter(v => !v.resolved && v.severity === 'WARNING').length;
 
   return (
     <div className="flex flex-col min-h-screen">
