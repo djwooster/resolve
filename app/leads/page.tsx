@@ -5,7 +5,8 @@ import { motion } from 'framer-motion';
 import { Topbar } from '@/components/layout/topbar';
 import { useResolveData } from '@/lib/use-resolve-data';
 import { cn } from '@/lib/utils';
-import { Phone, AlertTriangle } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
+import { CallButton } from '@/components/call/call-button';
 import { format } from 'date-fns';
 import type { LeadStage } from '@/lib/types';
 
@@ -128,10 +129,11 @@ export default function LeadsPage() {
                       )}
                     </td>
                     <td className="px-4 py-4">
-                      <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] text-white text-xs font-semibold transition-colors">
-                        <Phone className="w-3 h-3" />
-                        Call
-                      </button>
+                      <CallButton
+                        phone={lead.phone}
+                        contactName={lead.name}
+                        contactSource={lead.source}
+                      />
                     </td>
                   </motion.tr>
                 ))}

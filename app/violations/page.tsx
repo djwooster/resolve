@@ -5,7 +5,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Topbar } from '@/components/layout/topbar';
 import { useResolveData } from '@/lib/use-resolve-data';
 import { cn, getSeverityBadge } from '@/lib/utils';
-import { Phone, CheckCircle, ArrowUpRight, Clock } from 'lucide-react';
+import { CheckCircle, ArrowUpRight, Clock } from 'lucide-react';
+import { CallButton } from '@/components/call/call-button';
 import type { Violation } from '@/lib/types';
 
 function ViolationCard({ violation }: { violation: Violation }) {
@@ -94,10 +95,14 @@ function ViolationCard({ violation }: { violation: Violation }) {
 
           {/* Action buttons */}
           <div className="flex flex-col gap-2 shrink-0 min-w-[140px]">
-            <button className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-lg bg-white text-black text-sm font-bold hover:bg-zinc-100 transition-colors">
-              <Phone className="w-4 h-4" />
-              Call Lead
-            </button>
+            <CallButton
+              phone={violation.leadPhone}
+              contactName={violation.leadName}
+              contactSource={violation.leadSource}
+              variant="primary"
+              size="md"
+              className="w-full justify-center"
+            />
             <button className="flex items-center justify-center gap-2 w-full py-2.5 px-4 rounded-lg bg-[#1A1A1E] border border-[#2a2a2e] text-zinc-300 text-sm font-semibold hover:bg-[#222226] hover:text-white transition-colors">
               <ArrowUpRight className="w-4 h-4" />
               Escalate

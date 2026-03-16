@@ -2,9 +2,10 @@
 
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn, getSeverityBadge } from '@/lib/utils';
-import { Phone, ChevronRight } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import type { Violation } from '@/lib/types';
+import { CallButton } from '@/components/call/call-button';
 
 interface ViolationFeedProps {
   violations: Violation[];
@@ -63,10 +64,11 @@ export function ViolationFeed({ violations }: ViolationFeedProps) {
                   </p>
                 </div>
                 <div className="flex gap-2 shrink-0">
-                  <button className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/[0.08] hover:bg-white/[0.12] text-white text-xs font-semibold transition-colors">
-                    <Phone className="w-3 h-3" />
-                    Call
-                  </button>
+                  <CallButton
+                    phone={violation.leadPhone}
+                    contactName={violation.leadName}
+                    contactSource={violation.leadSource}
+                  />
                 </div>
               </div>
             </motion.div>
