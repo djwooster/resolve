@@ -10,26 +10,26 @@ export function getSeverityColor(severity: Severity) {
   switch (severity) {
     case 'CRITICAL': return 'text-red-400'
     case 'WARNING': return 'text-amber-400'
-    case 'ALERT': return 'text-indigo-400'
+    case 'ALERT': return 'text-blue-400'
     default: return 'text-zinc-400'
   }
 }
 
 export function getSeverityBg(severity: Severity) {
   switch (severity) {
-    case 'CRITICAL': return 'bg-red-500/10 border-red-500/30'
-    case 'WARNING': return 'bg-amber-500/10 border-amber-500/30'
-    case 'ALERT': return 'bg-indigo-500/10 border-indigo-500/30'
-    default: return 'bg-zinc-500/10 border-zinc-500/30'
+    case 'CRITICAL': return 'bg-red-500/[0.06] border-red-500/20'
+    case 'WARNING': return 'bg-amber-500/[0.06] border-amber-500/20'
+    case 'ALERT': return 'bg-blue-500/[0.06] border-blue-500/20'
+    default: return 'bg-white/[0.03] border-white/[0.08]'
   }
 }
 
 export function getSeverityBadge(severity: Severity) {
   switch (severity) {
-    case 'CRITICAL': return 'bg-red-500/20 text-red-400 border-red-500/30'
-    case 'WARNING': return 'bg-amber-500/20 text-amber-400 border-amber-500/30'
-    case 'ALERT': return 'bg-indigo-500/20 text-indigo-400 border-indigo-500/30'
-    default: return 'bg-zinc-500/20 text-zinc-400 border-zinc-500/30'
+    case 'CRITICAL': return 'text-red-400 border-red-500/20'
+    case 'WARNING': return 'text-amber-400 border-amber-500/20'
+    case 'ALERT': return 'text-blue-400 border-blue-500/20'
+    default: return 'text-zinc-400 border-white/[0.08]'
   }
 }
 

@@ -7,9 +7,6 @@ interface MetricCardProps {
   label: string;
   value: string | number;
   subValue?: string;
-  trend?: 'up' | 'down' | 'neutral';
-  trendValue?: string;
-  icon?: string;
   variant?: 'default' | 'critical' | 'warning' | 'success';
   className?: string;
 }
@@ -18,20 +15,17 @@ export function MetricCard({
   label,
   value,
   subValue,
-  trend,
-  trendValue,
-  icon,
   variant = 'default',
   className,
 }: MetricCardProps) {
-  const variantStyles = {
-    default: 'border-[#1E1E22]',
-    critical: 'border-red-500/30 bg-red-500/5 critical-glow',
-    warning: 'border-amber-500/30 bg-amber-500/5 warning-glow',
-    success: 'border-emerald-500/30 bg-emerald-500/5',
+  const borderAccent = {
+    default: '',
+    critical: 'border-l-2 border-l-red-500/60',
+    warning: 'border-l-2 border-l-amber-500/60',
+    success: 'border-l-2 border-l-emerald-500/60',
   };
 
-  const valueStyles = {
+  const valueColor = {
     default: 'text-white',
     critical: 'text-red-400',
     warning: 'text-amber-400',
@@ -41,35 +35,20 @@ export function MetricCard({
   return (
     <motion.div
       className={cn(
-        'rounded-xl border bg-[#111113] p-6 card-hover',
-        variantStyles[variant],
+        'rounded-xl border border-white/[0.06] bg-[#0D0D0F] p-5',
+        borderAccent[variant],
         className
       )}
-      initial={{ opacity: 0, y: 10 }}
+      initial={{ opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <div className="flex items-start justify-between mb-3">
-        <p className="text-sm font-medium text-zinc-400">{label}</p>
-        {icon && <span className="text-xl">{icon}</span>}
-      </div>
-      <div className={cn('text-4xl font-bold tracking-tight', valueStyles[variant])}>
+      <p className="text-xs text-zinc-600 uppercase tracking-widest font-medium mb-3">{label}</p>
+      <div className={cn('text-3xl font-semibold tracking-tight', valueColor[variant])}>
         {value}
       </div>
-      {(subValue || trendValue) && (
-        <div className="mt-2 flex items-center gap-2">
-          {subValue && <p className="text-sm text-zinc-500">{subValue}</p>}
-          {trendValue && (
-            <span className={cn(
-              'text-xs font-semibold px-1.5 py-0.5 rounded',
-              trend === 'up' ? 'text-emerald-400 bg-emerald-400/10' :
-              trend === 'down' ? 'text-red-400 bg-red-400/10' :
-              'text-zinc-400 bg-zinc-400/10'
-            )}>
-              {trendValue}
-            </span>
-          )}
-        </div>
+      {subValue && (
+        <p className="text-xs text-zinc-600 mt-2">{subValue}</p>
       )}
     </motion.div>
   );

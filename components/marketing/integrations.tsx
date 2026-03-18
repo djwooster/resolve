@@ -70,7 +70,11 @@ export function Integrations() {
                 <div className="w-12 h-12 rounded-xl bg-white/[0.05] border border-white/[0.07] flex items-center justify-center">
                   <span className="text-sm font-bold font-mono text-zinc-300">{integration.logo.text}</span>
                 </div>
-                <span className="text-xs font-medium px-2.5 py-1 rounded-full border border-white/[0.08] text-zinc-500">
+                <span className={`text-xs font-medium px-2.5 py-1 rounded-full border ${
+                  integration.badge === 'Available Now'
+                    ? 'text-emerald-400 border-emerald-500/20 bg-emerald-500/[0.06]'
+                    : 'text-blue-400 border-blue-500/20 bg-blue-500/[0.06]'
+                }`}>
                   {integration.badge}
                 </span>
               </div>

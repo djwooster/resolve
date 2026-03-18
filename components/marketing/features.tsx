@@ -18,7 +18,7 @@ function MiniDashboard() {
         />
         <span className="text-xs text-zinc-600 uppercase tracking-widest">Revenue at Risk</span>
       </div>
-      <p className="text-2xl font-bold text-white tracking-tight">$24,800</p>
+      <p className="text-2xl font-bold text-red-400 tracking-tight">$24,800</p>
       <div className="mt-3 space-y-1.5">
         {leads.map((l) => (
           <div key={l.name} className="flex items-center justify-between text-xs">
@@ -35,7 +35,7 @@ function ROICard() {
   return (
     <div className="rounded-xl border border-white/[0.06] bg-[#0A0A0B] p-4 mt-6">
       <p className="text-xs text-zinc-600 uppercase tracking-widest mb-3">Weekly ROI · Mon Mar 17</p>
-      <p className="text-2xl font-bold text-white tracking-tight">$12,400</p>
+      <p className="text-2xl font-bold text-emerald-400 tracking-tight">$12,400</p>
       <p className="text-xs text-zinc-600 mt-1">recovered this week</p>
       <div className="mt-4 grid grid-cols-3 gap-3">
         {[

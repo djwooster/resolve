@@ -30,7 +30,7 @@ function DashboardMockup() {
               />
               <span className="text-xs text-zinc-500 uppercase tracking-widest font-semibold">Revenue at Risk · Right Now</span>
             </div>
-            <span className="text-4xl font-semibold text-white tracking-tight">$24,800</span>
+            <span className="text-4xl font-semibold text-red-400 tracking-tight">$24,800</span>
           </div>
           <div className="text-right">
             <p className="text-xs text-zinc-600 mb-1">Violations</p>

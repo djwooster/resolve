@@ -59,7 +59,7 @@ export function Testimonials() {
               <div className="flex gap-1">
                 {Array.from({ length: 5 }).map((_, i) => (
                   <svg key={i} width="12" height="12" viewBox="0 0 14 14" fill="none">
-                    <path d="M7 1l1.5 4H13L9.5 7.5l1.5 4L7 9.5 3 11.5l1.5-4L1 5h4.5L7 1z" fill="currentColor" className="text-zinc-500" />
+                    <path d="M7 1l1.5 4H13L9.5 7.5l1.5 4L7 9.5 3 11.5l1.5-4L1 5h4.5L7 1z" fill="currentColor" className="text-amber-400" />
                   </svg>
                 ))}
               </div>

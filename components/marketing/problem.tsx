@@ -61,13 +61,13 @@ function CostCalculator() {
 
       <div className="rounded-xl border border-white/[0.08] bg-white/[0.03] p-5">
         <p className="text-xs text-zinc-500 uppercase tracking-widest mb-1">Estimated revenue at risk / month</p>
-        <p className="text-4xl font-bold text-white tracking-tight tabular-nums">{formatDollars(atRisk)}</p>
+        <p className="text-4xl font-bold text-red-400 tracking-tight tabular-nums">{formatDollars(atRisk)}</p>
       </div>
 
       <p className="text-xs text-zinc-600 mt-4 leading-relaxed">
         Resolve recovers an average of 15–20% of at-risk leads in the first 30 days.
         That's{' '}
-        <span className="text-zinc-300 font-medium">
+        <span className="text-emerald-400 font-medium">
           {formatDollars(Math.round(atRisk * 0.175))}
         </span>{' '}
         back in your pipeline.
