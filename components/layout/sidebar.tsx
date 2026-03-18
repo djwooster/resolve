@@ -16,7 +16,7 @@ import {
 } from 'lucide-react';
 
 const NAV_ITEMS = [
-  { href: '/', icon: LayoutDashboard, label: 'Dashboard', badge: null },
+  { href: '/dashboard', icon: LayoutDashboard, label: 'Dashboard', badge: null },
   { href: '/violations', icon: AlertTriangle, label: 'Violations', badge: 8 },
   { href: '/leads', icon: Users, label: 'Leads', badge: null },
   { href: '/rules', icon: BookOpen, label: 'Rules', badge: null },
