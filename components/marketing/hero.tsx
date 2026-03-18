@@ -24,11 +24,11 @@ function DashboardMockup() {
           <div>
             <div className="flex items-center gap-2 mb-1">
               <motion.div
-                className="w-2 h-2 rounded-full bg-white/40"
+                className="w-2 h-2 rounded-full bg-red-400/60"
                 animate={{ opacity: [1, 0.2, 1] }}
                 transition={{ duration: 1.5, repeat: Infinity }}
               />
-              <span className="text-xs text-zinc-500 uppercase tracking-widest font-semibold">Revenue at Risk · Right Now</span>
+              <span className="text-xs text-zinc-500 uppercase tracking-widest font-semibold">Revenue at Risk</span>
             </div>
             <span className="text-4xl font-semibold text-red-400 tracking-tight">$24,800</span>
           </div>

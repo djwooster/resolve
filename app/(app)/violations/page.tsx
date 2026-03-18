@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Topbar } from '@/components/layout/topbar';
 import { useResolveData } from '@/lib/use-resolve-data';
 import { cn } from '@/lib/utils';
-import { CheckCircle, ArrowUpRight, Clock } from 'lucide-react';
+import { CheckCircle, Clock } from 'lucide-react';
 import { CallButton } from '@/components/call/call-button';
 import type { Violation } from '@/lib/types';
 
@@ -24,18 +24,20 @@ function ViolationCard({ violation }: { violation: Violation }) {
       <div className="p-6">
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <div className="flex items-center gap-2 mb-4">
-              <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', isCritical ? 'bg-red-500' : 'bg-amber-500')} />
-              <span className={cn('text-xs font-medium uppercase tracking-widest', isCritical ? 'text-red-400' : 'text-amber-400')}>
-                {violation.severity}
-              </span>
-              <span className="text-zinc-600 text-xs">·</span>
-              <span className="text-xs text-zinc-500">{violation.ruleName}</span>
-              {violation.escalated && <span className="text-xs font-medium text-blue-400">· Escalated</span>}
-            </div>
-            <div className="flex items-center gap-1.5 mb-4 text-xs text-zinc-600">
-              <Clock className="w-3 h-3" />
-              <span>Detected {violation.elapsed}</span>
+            <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="flex items-center gap-2">
+                <span className={cn('w-1.5 h-1.5 rounded-full shrink-0', isCritical ? 'bg-red-500' : 'bg-amber-500')} />
+                <span className={cn('text-xs font-medium uppercase tracking-widest', isCritical ? 'text-red-400' : 'text-amber-400')}>
+                  {violation.severity}
+                </span>
+                <span className="text-zinc-600 text-xs">·</span>
+                <span className="text-xs text-zinc-500">{violation.ruleName}</span>
+                {violation.escalated && <span className="text-xs font-medium text-blue-400">· Escalated</span>}
+              </div>
+              <div className="flex items-center gap-1 text-xs text-zinc-600 shrink-0">
+                <Clock className="w-3 h-3" />
+                <span>{violation.elapsed}</span>
+              </div>
             </div>
             <div className="grid grid-cols-2 gap-2 mb-4">
               <div className="rounded-lg bg-[#0A0A0B] border border-white/[0.06] p-3">
@@ -49,29 +51,20 @@ function ViolationCard({ violation }: { violation: Violation }) {
                 <p className="text-xs text-zinc-500">{violation.location}</p>
               </div>
             </div>
-            <div className="rounded-lg bg-[#0A0A0B] border border-white/[0.06] p-4 mb-4 space-y-3">
-              <div>
-                <p className="text-xs text-zinc-600 uppercase tracking-widest mb-1">Revenue Impact</p>
-                <p className="text-sm text-zinc-300">{violation.revenueImpact}</p>
-              </div>
-              <div>
-                <p className="text-xs text-zinc-600 uppercase tracking-widest mb-1">Enforcement</p>
-                <p className="text-sm font-medium text-white">{violation.enforcement}</p>
-              </div>
+            <div className="rounded-lg bg-[#0A0A0B] border border-white/[0.06] p-4 mb-4">
+              <p className="text-xs text-zinc-600 uppercase tracking-widest mb-1">Revenue Impact</p>
+              <p className="text-sm text-zinc-300">{violation.revenueImpact}</p>
             </div>
             <span className={cn('text-xs font-medium uppercase tracking-widest', isCritical ? 'text-red-400' : 'text-amber-400')}>
               {violation.status}
             </span>
           </div>
-          <div className="flex flex-col gap-2 shrink-0 min-w-[130px]">
-            <CallButton phone={violation.leadPhone} contactName={violation.leadName} contactSource={violation.leadSource} variant="primary" size="md" className="w-full justify-center" />
-            <button className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg border border-white/[0.08] bg-white/[0.03] text-zinc-400 text-xs font-medium hover:text-white hover:bg-white/[0.06] transition-colors">
-              <ArrowUpRight className="w-3.5 h-3.5" /> Escalate
-            </button>
-            <button className="flex items-center justify-center gap-2 w-full py-2 px-3 rounded-lg border border-emerald-500/20 bg-emerald-500/[0.04] text-emerald-400 text-xs font-medium hover:bg-emerald-500/[0.08] transition-colors">
-              <CheckCircle className="w-3.5 h-3.5" /> Handled
-            </button>
-          </div>
+        </div>
+        <div className="flex gap-2 mt-5 pt-5 border-t border-white/[0.06]">
+          <CallButton phone={violation.leadPhone} contactName={violation.leadName} contactSource={violation.leadSource} variant="primary" size="md" className="flex-1 justify-center" />
+<button className="flex items-center justify-center gap-2 flex-1 py-2 px-3 rounded-lg border border-emerald-500/20 bg-emerald-500/[0.04] text-emerald-400 text-xs font-medium hover:bg-emerald-500/[0.08] transition-colors">
+            <CheckCircle className="w-3.5 h-3.5" /> Mark as Resolved
+          </button>
         </div>
       </div>
     </motion.div>

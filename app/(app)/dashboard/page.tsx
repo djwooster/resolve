@@ -91,7 +91,7 @@ export default function DashboardPage() {
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.06 } } }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6"
         >
-          <MetricCard label="Active Violations" value={m.activeViolations} subValue={`${m.criticalViolations} critical`} variant={m.criticalViolations > 0 ? 'critical' : 'default'} />
+          <MetricCard label="Active Violations" value={m.activeViolations} subValue={`${m.criticalViolations} critical`} variant={m.criticalViolations > 0 ? 'critical' : 'default'} href="/violations" />
           <MetricCard label="Leads at Risk" value={m.leadsAtRisk} subValue="Need immediate action" variant={m.leadsAtRisk > 0 ? 'warning' : 'default'} />
           <MetricCard label="Bookings Today" value={`${m.bookingsToday}/${m.bookingTarget}`} subValue={`${Math.round((m.bookingsToday / m.bookingTarget) * 100)}% of target`} variant={m.bookingsToday < m.bookingTarget * 0.5 ? 'warning' : 'success'} />
           <MetricCard label="Avg Response Time" value={`${m.avgResponseTime}m`} subValue="Target: ≤ 3 min" variant={m.avgResponseTime > 3 ? 'critical' : 'success'} />

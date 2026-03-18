@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 import {
   LayoutDashboard,
@@ -34,26 +33,11 @@ export function Sidebar() {
               <path d="M13 2L4.5 13.5H11L10 22L20.5 10H14L13 2Z" fill="#FF2D2D" stroke="#FF2D2D" strokeWidth="1.5" strokeLinejoin="round" />
             </svg>
           </div>
-          <div>
-            <p className="text-sm font-semibold tracking-tight text-white">Resolve</p>
-            <p className="text-[10px] text-zinc-600 uppercase tracking-widest font-medium">Revenue Enforcement</p>
-          </div>
+          <p className="text-sm font-semibold tracking-tight text-white">Resolve</p>
         </div>
       </div>
 
-      {/* Live status */}
-      <div className="px-5 py-3 border-b border-white/[0.06]">
-        <div className="flex items-center gap-2">
-          <motion.div
-            className="w-1.5 h-1.5 rounded-full bg-red-500"
-            animate={{ opacity: [1, 0.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-          <span className="text-xs font-medium text-zinc-500 uppercase tracking-widest">Live Monitoring</span>
-        </div>
-      </div>
-
-      {/* Navigation */}
+{/* Navigation */}
       <nav className="flex-1 px-3 py-3 space-y-0.5">
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href;

@@ -12,7 +12,7 @@ function MiniDashboard() {
     <div className="rounded-xl border border-white/[0.06] bg-[#0A0A0B] p-4 mt-6">
       <div className="flex items-center gap-2 mb-3">
         <motion.div
-          className="w-1.5 h-1.5 rounded-full bg-white/30"
+          className="w-1.5 h-1.5 rounded-full bg-red-400/50"
           animate={{ opacity: [1, 0.2, 1] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         />

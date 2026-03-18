@@ -1,6 +1,8 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import Link from 'next/link';
+import { ArrowUpRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MetricCardProps {
@@ -8,6 +10,7 @@ interface MetricCardProps {
   value: string | number;
   subValue?: string;
   variant?: 'default' | 'critical' | 'warning' | 'success';
+  href?: string;
   className?: string;
 }
 
@@ -16,6 +19,7 @@ export function MetricCard({
   value,
   subValue,
   variant = 'default',
+  href,
   className,
 }: MetricCardProps) {
   const borderAccent = {
@@ -43,7 +47,14 @@ export function MetricCard({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      <p className="text-xs text-zinc-600 uppercase tracking-widest font-medium mb-3">{label}</p>
+      <div className="flex items-center justify-between mb-3">
+        <p className="text-xs text-zinc-600 uppercase tracking-widest font-medium">{label}</p>
+        {href && (
+          <Link href={href} className="text-zinc-600 hover:text-zinc-300 transition-colors">
+            <ArrowUpRight className="w-3.5 h-3.5" />
+          </Link>
+        )}
+      </div>
       <div className={cn('text-3xl font-semibold tracking-tight', valueColor[variant])}>
         {value}
       </div>
